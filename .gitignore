@@ -1,0 +1,12 @@
+*~
+*.tmp/
+
+*.mat
+
+*.jpeg
+*.jpg
+*.bmp
+*.png
+
+*.pdf
+*.zip

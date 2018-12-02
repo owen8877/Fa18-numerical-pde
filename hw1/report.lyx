@@ -1,0 +1,1426 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Coding homework 1
+\end_layout
+
+\begin_layout Author
+Ziheng Chen 1500010632
+\end_layout
+
+\begin_layout Section*
+Notation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\Omega & =\left\{ 0<x,y<1\right\} \\
+\partial\Omega_{1} & =\left\{ 0\le x\le1,y=0\right\} \\
+\partial\Omega_{2} & =\left\{ x=1,0\le y\le1\right\} \\
+\partial\Omega_{3} & =\left\{ 0\le x\le1,y=1\right\} \\
+\partial\Omega_{4} & =\left\{ x=0,0\le y\le1\right\} 
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Usage of code
+\end_layout
+
+\begin_layout Standard
+Run 
+\family typewriter
+posterior.m
+\family default
+ or 
+\family typewriter
+prior.m
+\family default
+ with proper problem set:
+\end_layout
+
+\begin_layout LyX-Code
+% ** Change the line below to choose the problem **
+\end_layout
+
+\begin_layout LyX-Code
+prob = @prob2;
+\end_layout
+
+\begin_layout Section*
+The First Problem
+\end_layout
+
+\begin_layout Subsection*
+Formulation
+\end_layout
+
+\begin_layout Standard
+We propose the first model to be
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+-\Delta u & =0\\
+u|_{\partial\Omega_{1}} & =d_{1}\\
+u|_{\partial\Omega_{2}} & =d_{2}\\
+u|_{\partial\Omega_{3}} & =d_{3}\\
+\dfrac{\partial u}{\partial n}+\alpha\cdot u\bigg|_{\partial\Omega_{4}} & =g
+\end{cases},\label{eq:problem-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the analytical solution to Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:problem-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ should exactly be 
+\begin_inset Formula $u=\sum_{i=1}^{2}q_{i}\ln\left(\sqrt{\left(x-x_{i}\right)^{2}+\left(y-y_{i}\right)^{2}}\right)$
+\end_inset
+
+, so 
+\begin_inset Formula $d_{1}\left(x\right)=u\left(x,0\right),d_{2}\left(y\right)=u\left(1,y\right),d_{3}\left(x\right)=u\left(x,1\right)$
+\end_inset
+
+, and 
+\begin_inset Formula 
+\[
+g\left(y\right)\triangleq\sum_{i=1}^{2}q_{i}\frac{x-x_{i}}{\left(x-x_{i}\right)^{2}+\left(y-y_{i}\right)^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here we restrict 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ to be positive.
+\end_layout
+
+\begin_layout Subsection*
+Difference Operator
+\end_layout
+
+\begin_layout Standard
+For those regular inner points 
+\begin_inset Formula $\mathring{J_{\Omega}}$
+\end_inset
+
+, the difference operator is easy to write down:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+-L_{h}U_{i,j}=\frac{4U_{i,j}-U_{i+1,j}-U_{i-1,j}-U_{i,j+1}-U_{i,j-1}}{h^{2}},1\le i,j\le N-1.\label{eq:p1-diff-inner}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The only difficult part lies in the operator on 
+\begin_inset Formula $\partial\Omega_{1}$
+\end_inset
+
+: if we use the naive discrete version of Robin boundary condition, i.e.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{U_{1,j}-U_{0,j}}{h}+\alpha U_{0,j}=g_{j},\label{p1-diff-border-1st-order}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+the local truncation error is at 1st order, which makes it harder to analyze
+ the 
+\begin_inset Formula $\infty$
+\end_inset
+
+-norm of error.
+ To achieve higher order, we can use the centeral discrete difference scheme,
+ i.e.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{U_{1,j}-U_{-1,j}}{2h}+\alpha U_{0,j}=g_{j}.\label{p1-diff-border-2nd-order}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+But there remains the 
+\begin_inset Quotes eld
+\end_inset
+
+out-of boundary
+\begin_inset Quotes erd
+\end_inset
+
+ term 
+\begin_inset Formula $U_{-1,j}$
+\end_inset
+
+; to eliminate that, we can use Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-diff-inner"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ on those non-regular inner points, so that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+-\widetilde{L_{h}}U_{0,j}=\frac{-4U_{0,j}+2U_{1,j}+U_{0,j+1}+U_{0,j-1}}{2h}+\alpha U_{0,j},i=0,1\le j\le N-1.\label{eq:p1-diff-border}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Implementation in Matlab
+\end_layout
+
+\begin_layout Standard
+Clearly Matlab does not recognize Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-diff-inner"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-diff-border"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ To turn them into linear systems, we use the following reshaping procedures:
+\end_layout
+
+\begin_layout Enumerate
+Reorder the grid terms 
+\begin_inset Formula $U_{i,j}$
+\end_inset
+
+ by column into a vector
+\begin_inset Formula 
+\[
+U=\left(U_{0,1},U_{0,2},\dots,U_{0,N-1},U_{1,1},\dots,U_{1,N-1},\dots\right)^{T}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-diff-inner"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-diff-border"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be written into
+\begin_inset Formula 
+\begin{equation}
+AU=b\label{eq:p1-ls-Ax=b}
+\end{equation}
+
+\end_inset
+
+where
+\begin_inset Formula 
+\begin{align}
+A & =\left(\begin{array}{ccccc}
+\widetilde{T} & -2I\\
+-I & T & \ddots\\
+ & \ddots & \ddots & \ddots\\
+ &  & \ddots & T & -I\\
+ &  &  & -I & T
+\end{array}\right),\widetilde{T}=\left(\begin{array}{ccccc}
+4-2\alpha h & -1\\
+-1 & 4-2\alpha h & \ddots\\
+ & \ddots & \ddots & \ddots\\
+ &  & \ddots & 4-2\alpha h & -1\\
+ &  &  & -1 & 4-2\alpha h
+\end{array}\right),\label{eq:p1-ls-A}\\
+ & T=\left(\begin{array}{ccccc}
+4 & -1\\
+-1 & 4 & \ddots\\
+ & \ddots & \ddots & \ddots\\
+ &  & \ddots & 4 & -1\\
+ &  &  & -1 & 4
+\end{array}\right).
+\end{align}
+
+\end_inset
+
+We refer the construction of 
+\begin_inset Formula $b$
+\end_inset
+
+ to Line 74-77 of 
+\family typewriter
+prob1.m
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+But the coefficient matrix in Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-ls-A"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is not symmetric (although it is strictly diagonal dominated).
+ One way to turn it into symmetric is by dividing the first 
+\begin_inset Formula $N-1$
+\end_inset
+
+ lines with 2 as well as those of 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ Since the operation in trivial we will leave it to Line 79-80 in 
+\family typewriter
+prob1.m
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+We solve the transformed version of Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-ls-Ax=b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ by Conjugate Gradient Method, which is implemented in 
+\family typewriter
+util/CG.m
+\family default
+.
+\end_layout
+
+\begin_layout Subsection*
+Prior Error Estimation
+\end_layout
+
+\begin_layout Subsubsection*
+Comparison Theorem
+\end_layout
+
+\begin_layout Standard
+We have already known that if there exists 
+\begin_inset Formula $\widetilde{L_{h}}\Phi_{j}\ge1,\Phi_{j}\ge0$
+\end_inset
+
+, then
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\max_{j\in J_{\Omega}}\left|e_{j}\right|\le\max_{j\in J_{D}}\left|e_{j}\right|+\left(\max_{j\in J_{D}}\Phi_{j}\right)\left(\max_{j\in J_{\Omega}}\left|\widetilde{L_{h}}U_{j}+f_{j}\right|+\max_{j\in J_{\Omega}}\left|\widetilde{L_{h}}u_{j}+f_{j}\right|\right).\label{eq:p1-ct}
+\end{equation}
+
+\end_inset
+
+First we have to know 
+\begin_inset Formula $C\triangleq\max_{j\in J_{D}}\Phi_{j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+It is not hard to guess 
+\begin_inset Formula $\Phi_{j}$
+\end_inset
+
+ to be 
+\begin_inset Formula $\frac{1}{4}\left(\left(x-2\right)^{2}+\left(y-\frac{1}{2}\right)^{2}\right)$
+\end_inset
+
+; in fact,
+\end_layout
+
+\begin_layout Itemize
+On 
+\begin_inset Formula $\Omega$
+\end_inset
+
+, 
+\begin_inset Formula $L_{h}\Phi_{j}=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+On 
+\begin_inset Formula $\partial\Omega_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $\widetilde{L_{h}}\Phi_{j}=-\dfrac{\partial\Phi_{j}}{\partial x}+2\alpha h\Phi_{j}\ge\frac{1}{2}\left(0+2\right)=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+So 
+\begin_inset Formula $C$
+\end_inset
+
+ is 
+\begin_inset Formula $\frac{17}{16}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Local Truncation Error
+\end_layout
+
+\begin_layout Standard
+We will estimate LTE on two parts respectively:
+\end_layout
+
+\begin_layout Itemize
+On 
+\begin_inset Formula $\Omega$
+\end_inset
+
+, the estimation is straightforward:
+\begin_inset Formula 
+\begin{align*}
+T_{\mathbf{j}}=L_{h}u_{\mathbf{j}}+f_{\mathbf{j}} & =-\frac{4u_{i,j}-u_{i+1,j}-u_{i-1,j}-u_{i,j+1}-u_{i,j-1}}{h^{2}}-\Delta u_{i,j}\\
+ & =\frac{1}{12}h^{2}\left(\dfrac{\partial}{\partial x}\right)^{4}u\left(\left(i+\xi_{1}\right)h,jh\right)+\frac{1}{12}h^{2}\left(\dfrac{\partial}{\partial y}\right)^{4}u\left(ih,\left(j+\xi_{2}\right)h\right),
+\end{align*}
+
+\end_inset
+
+here 
+\begin_inset Formula $\xi_{1},\xi_{2}\in(-1,1)$
+\end_inset
+
+.
+ So the 
+\begin_inset Formula $\infty$
+\end_inset
+
+-norm of 
+\begin_inset Formula $T_{\mathbf{j}}$
+\end_inset
+
+ can be controlled by
+\begin_inset Formula 
+\[
+\frac{1}{12}h^{2}\left(\max_{j\in J_{\Omega}}\left|u_{xxxx}\right|+\max_{j\in J_{\Omega}}\left|u_{yyyy}\right|\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+On 
+\begin_inset Formula $\partial\Omega_{1}$
+\end_inset
+
+, the estimation is a little tricky:
+\begin_inset Formula 
+\begin{align*}
+T_{\mathbf{j}}=\widetilde{L_{h}}u_{\mathbf{j}}+g_{\mathbf{j}} & =-\frac{4u_{0,j}-2u_{1,j}-u_{0,j+1}-u_{0,j-1}+h^{2}f_{0,j}}{2h}-\dfrac{\partial u_{i,j}}{\partial n}\\
+ & =\frac{-2\left(\frac{1}{6}h^{3}\left(\dfrac{\partial}{\partial x}\right)^{3}u\left(\xi_{1}h,jh\right)\right)-2\left(\frac{1}{24}h^{4}\left(\dfrac{\partial}{\partial y}\right)^{4}u\left(0,\left(j+\xi_{2}\right)h\right)\right)}{2h},
+\end{align*}
+
+\end_inset
+
+here 
+\begin_inset Formula $\xi_{1}\in(0,1),\xi_{2}\in(-1,1)$
+\end_inset
+
+.
+ So likewise, 
+\begin_inset Formula $\left|\left|T_{\mathbf{j}}\right|\right|_{\infty}$
+\end_inset
+
+ can be controlled by
+\begin_inset Formula 
+\[
+\frac{1}{6}h^{2}\left(\max_{j\in J_{\Omega_{1}}}\left|u_{xxx}\right|+\frac{h}{4}\max_{j\in J_{\Omega_{1}}}\left|u_{yyyy}\right|\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+A Short Summary
+\end_layout
+
+\begin_layout Standard
+Since there is no error at the Dirichlet boundary conditions, we can simplify
+ Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-ct"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to 
+\begin_inset Formula 
+\begin{equation}
+\max_{j\in J_{\Omega}}\left|e_{j}\right|\le C\left(\max_{j\in J_{\Omega}}\left|\widetilde{L_{h}}U_{j}+f_{j}\right|+\max\left\{ \frac{1}{6}h^{2}\left(\max_{j\in J_{\Omega_{1}}}\left|u_{xxx}\right|+\frac{h}{4}\max_{j\in J_{\Omega_{1}}}\left|u_{yyyy}\right|\right),\frac{1}{12}h^{2}\left(\max_{j\in J_{\Omega}}\left|u_{xxxx}\right|+\max_{j\in J_{\Omega}}\left|u_{yyyy}\right|\right)\right\} \right)\label{eq:p1-prior-error}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For this specific problem, considering that 
+\begin_inset Formula $\left(\dfrac{\partial}{\partial x}\right)^{k}u=y^{k}\exp\left(xy\right)$
+\end_inset
+
+, it is handy to simplify Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-prior-error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ into
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left|\left|e_{\mathbf{j}}\right|\right|_{\infty}\le\frac{17}{16}\left(\max_{j\in J_{\Omega}}\left|\widetilde{L_{h}}U_{j}+f_{j}\right|+\frac{e}{3}h^{2}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If we have a torlerance of 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+ when solving the linear system 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-ls-Ax=b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the max 
+\begin_inset Formula $h$
+\end_inset
+
+ we can use is approximately 
+\begin_inset Formula $2.0408\cdot10^{-3}$
+\end_inset
+
+, where 
+\begin_inset Formula $N$
+\end_inset
+
+ should be no less than 491.
+\end_layout
+
+\begin_layout Subsection*
+Posterior Error Estimation
+\end_layout
+
+\begin_layout Standard
+Suppose the solution 
+\begin_inset Formula $U_{h}$
+\end_inset
+
+ to the difference problem can be approximated 
+\begin_inset Formula $h$
+\end_inset
+
+, i.e.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+U_{h}=u+v\cdot h^{\alpha}+o\left(h^{\alpha}\right).
+\]
+
+\end_inset
+
+Then we can estimate the main error term 
+\begin_inset Formula $v\cdot h^{\alpha}$
+\end_inset
+
+ by means of
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v\cdot h^{\alpha}=\frac{U_{h}-U_{\frac{h}{2}}}{1-2^{-\alpha}},
+\]
+
+\end_inset
+
+that if 
+\begin_inset Formula $\left|\left|U_{h}-U_{\frac{h}{2}}\right|\right|_{\infty}$
+\end_inset
+
+is in 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-order with 
+\begin_inset Formula $h$
+\end_inset
+
+, the discrete solution converges at the order of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection*
+Numerical Result
+\end_layout
+
+\begin_layout Standard
+Prior error estimation suggests that a minimal grid size of 491 is needed
+ to satisfy the given accuracy (see 
+\family typewriter
+prior.m
+\family default
+).
+\end_layout
+
+\begin_layout Standard
+In the following numerical experiments, we set 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ to 1.
+\end_layout
+
+\begin_layout Standard
+Then we refine the solutions obtained at 
+\begin_inset Formula $N=4$
+\end_inset
+
+ and examine if each solution reaches given accuracy.
+ We refer to Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p1-sol"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p1-error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p2-error-post"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The effective satisfying grid size number is 128, which is correctly smaller
+ than that predicted from prior error estimation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/p1-sol.epsc
+	width 100line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Numerical solution compared to ground truth obtained at 
+\begin_inset Formula $N=256$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p1-sol"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/p1-error.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error on the mesh obtained at 
+\begin_inset Formula $N=256$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p1-error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/p1-error-post.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Convergence order, approximately at 
+\begin_inset Formula $\alpha=1.972$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p2-error-post"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+The Second Problem
+\end_layout
+
+\begin_layout Subsection*
+Formulation
+\end_layout
+
+\begin_layout Standard
+We propose the second model to be
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+-\Delta u & =f\triangleq-\left(x^{2}+y^{2}\right)\exp\left(xy\right)\\
+u|_{\partial\Omega_{1}} & =d_{1}\triangleq0\\
+u|_{\partial\Omega_{2}} & =d_{2}\triangleq\exp\left(y\right)\\
+u|_{\partial\Omega_{3}} & =d_{3}\triangleq\exp\left(x\right)\\
+\dfrac{\partial u}{\partial n}\bigg|_{\partial\Omega_{4}} & =g\triangleq y
+\end{cases}.\label{eq:problem-2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that the analytical solution to Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:problem-2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is exactly 
+\begin_inset Formula $u=\exp\left(xy\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection*
+Difference Operator
+\end_layout
+
+\begin_layout Standard
+Most of the formula are similar to the previous section, so we just list
+ the important ones.
+\end_layout
+
+\begin_layout Standard
+For those regular inner points 
+\begin_inset Formula $\mathring{J_{\Omega}}$
+\end_inset
+
+, the difference operator is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+-L_{h}U_{i,j}=\frac{4U_{i,j}-U_{i+1,j}-U_{i-1,j}-U_{i,j+1}-U_{i,j-1}}{h^{2}},1\le i,j\le N-1.\label{eq:p2-diff-inner}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The operator on 
+\begin_inset Formula $\partial\Omega_{1}$
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+-\widetilde{L_{h}}U_{0,j}=\frac{4U_{0,j}-2U_{1,j}-U_{0,j+1}-U_{0,j-1}+h^{2}f_{i,j}}{2h},i=0,1\le j\le N-1.\label{eq:p2-diff-border}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Implementation in Matlab
+\end_layout
+
+\begin_layout Enumerate
+Reorder the grid terms 
+\begin_inset Formula $U_{i,j}$
+\end_inset
+
+ by column into a vector
+\begin_inset Formula 
+\[
+U=\left(U_{0,1},U_{0,2},\dots,U_{0,N-1},U_{1,1},\dots,U_{1,N-1},\dots\right)^{T}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p2-diff-inner"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p2-diff-border"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be written into
+\begin_inset Formula 
+\begin{equation}
+AU=b\label{eq:p2-ls-Ax=b}
+\end{equation}
+
+\end_inset
+
+where
+\begin_inset Formula 
+\begin{equation}
+A=\left(\begin{array}{ccccc}
+T & -2I\\
+-I & T & \ddots\\
+ & \ddots & \ddots & \ddots\\
+ &  & \ddots & T & -I\\
+ &  &  & -I & T
+\end{array}\right),T=\left(\begin{array}{ccccc}
+4 & -1\\
+-1 & 4 & \ddots\\
+ & \ddots & \ddots & \ddots\\
+ &  & \ddots & 4 & -1\\
+ &  &  & -1 & 4
+\end{array}\right).\label{eq:p2-ls-A}
+\end{equation}
+
+\end_inset
+
+We refer the construction of 
+\begin_inset Formula $b$
+\end_inset
+
+ to Line 50-53 of 
+\family typewriter
+prob2.m
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+One way to turn the coefficient matrix in Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p2-ls-A"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ into symmetric is by dividing the first 
+\begin_inset Formula $N-1$
+\end_inset
+
+ lines with 2 as well as those of 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ The operation is left to Line 55-56 in 
+\family typewriter
+prob2.m
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+We solve the transformed version of Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p2-ls-Ax=b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ by Conjugate Gradient Method, which is implemented in 
+\family typewriter
+util/CG.m
+\family default
+.
+\end_layout
+
+\begin_layout Subsection*
+Prior Error Estimation
+\end_layout
+
+\begin_layout Standard
+Most of the deductions coincide with that in the first problem.
+ Since we use Neumann boundary conditions here (effectively 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+), so the comparison function in Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-ct"
+
+\end_inset
+
+ still holds, and 
+\begin_inset Formula $C=\frac{17}{16}$
+\end_inset
+
+.
+ The estimation can be simpliefied to
+\begin_inset Formula 
+\begin{equation}
+\max_{j\in J_{\Omega}}\left|e_{j}\right|\le C\left(\max_{j\in J_{\Omega}}\left|\widetilde{L_{h}}U_{j}+f_{j}\right|+\max\left\{ \frac{1}{6}h^{2}\left(\max_{j\in J_{\Omega_{1}}}\left|u_{xxx}\right|+\frac{h}{4}\max_{j\in J_{\Omega_{1}}}\left|u_{yyyy}\right|\right),\frac{1}{12}h^{2}\left(\max_{j\in J_{\Omega}}\left|u_{xxxx}\right|+\max_{j\in J_{\Omega}}\left|u_{yyyy}\right|\right)\right\} \right)\label{eq:p2-prior-error}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For this specific problem, it is very hard to obtain the maxium by hand,
+ so we just get them numerically (see Line 18-26 in 
+\family typewriter
+prior.m
+\family default
+).
+ If we have a torlerance of 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+ when solving the linear system 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p2-ls-Ax=b"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the max 
+\begin_inset Formula $h$
+\end_inset
+
+ we can use is approximately 
+\begin_inset Formula $5.0130\cdot10^{-3}$
+\end_inset
+
+, where 
+\begin_inset Formula $N$
+\end_inset
+
+ should be no less than 200.
+\end_layout
+
+\begin_layout Subsection*
+Posterior Error Estimation
+\end_layout
+
+\begin_layout Standard
+The same as in the first problem.
+\end_layout
+
+\begin_layout Subsection*
+Numerical Result
+\end_layout
+
+\begin_layout Standard
+Prior error estimation suggests that a minimal grid size of 200 is needed
+ to satisfy the given accuracy (see 
+\family typewriter
+prior.m
+\family default
+).
+\end_layout
+
+\begin_layout Standard
+Then we refine the solutions obtained at 
+\begin_inset Formula $N=4$
+\end_inset
+
+ and examine if each solution reaches given accuracy.
+ We refer to Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p1-error-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p2-error-post-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The effective satisfying grid size number is 64, which is correctly smaller
+ than that predicted from prior error estimation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/p2-error.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error on the mesh obtained at 
+\begin_inset Formula $N=256$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p1-error-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/p2-error-post.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Convergence order, approximately at 
+\begin_inset Formula $\alpha=1.906$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p2-error-post-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+A Brief Summary
+\end_layout
+
+\begin_layout Standard
+In this report we gave prior and posterior estimation on errors.
+ It is interesting that in different problems the contribution of prior
+ error comes from different parts: in the first problem the main contribution
+ is from LTE on 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ while in the second problem it is from LTE on 
+\begin_inset Formula $\partial\Omega_{1}$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

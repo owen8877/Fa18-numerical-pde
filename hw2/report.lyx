@@ -1,0 +1,2220 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\begin_local_layout
+Counter section
+         Within	part*
+End
+\end_local_layout
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement tbph
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Coding homework 2
+\end_layout
+
+\begin_layout Author
+Ziheng Chen 1500010632
+\end_layout
+
+\begin_layout Part*
+Problem 1
+\end_layout
+
+\begin_layout Standard
+Consider the following system:
+\begin_inset Formula 
+\[
+\begin{cases}
+\partial_{t}u=a\left(x,t\right)\Delta u+f\left(x,t\right) & t>0,0<x<1\\
+u\left(1,t\right)=0 & t>0\\
+\partial_{x}u=\alpha\left(t\right)\cdot u\left(0,t\right)+g\left(t\right) & t>0\\
+u\left(x,0\right)=\sin\left(\pi x\right) & 0\le x\le1
+\end{cases}
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\begin{eqnarray*}
+a\left(x,t\right) & = & \frac{1}{\pi^{2}\left(1+t\right)}\\
+f\left(x,t\right) & = & \left(1-t\right)e^{-t}\sin\left(\pi x\right)\\
+\alpha\left(t\right) & = & 1+t^{2}\\
+g\left(t\right) & = & \pi\left(1+t\right)e^{-t}
+\end{eqnarray*}
+
+\end_inset
+
+to which the analytical solution is
+\begin_inset Formula 
+\[
+u\left(x,t\right)=\sin\left(\pi x\right)\cdot e^{-t}\left(1+t\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Question 1
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ stability, the condition is 
+\begin_inset Formula 
+\begin{equation}
+2\mu\left(1-2\theta\right)\le1,\label{eq:p1-q1-l2-cond}
+\end{equation}
+
+\end_inset
+
+while for 
+\begin_inset Formula $L_{\infty}$
+\end_inset
+
+stability (i.e.
+ the Maxium Value Principle), the condition is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+2\mu\left(1-\theta\right)\le1.\label{eq:p1-q1-linfty-cond}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $L_{\infty}$
+\end_inset
+
+stability condition is always stronger than that of 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+, we will test different range of 
+\begin_inset Formula $\mu$
+\end_inset
+
+'s to see if the numerical result is stable.
+\end_layout
+
+\begin_layout Standard
+We chose 
+\begin_inset Formula $\theta=0,0.25,0.4$
+\end_inset
+
+.
+ Since the spacial grids are fixed, we will change 
+\begin_inset Formula $\tau$
+\end_inset
+
+ to fit different conditions.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob1/q1-0.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob1/q1-0.25.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0.25$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob1/q1-0.4.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0.4$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Performance of 
+\begin_inset Formula $\theta$
+\end_inset
+
+-scheme when 
+\begin_inset Formula $\theta<0.5$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p1-q1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As is shown in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p1-q1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, Eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-q1-l2-cond"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:p1-q1-linfty-cond"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are not necessary conditions for bounding the errors, but indeed serve
+ as a good indicator where the errors can be well controlled.
+\end_layout
+
+\begin_layout Section*
+Question 2
+\end_layout
+
+\begin_layout Standard
+A first question is whether 
+\begin_inset Formula $\theta\ge\frac{1}{2}$
+\end_inset
+
+ can really tolerate much bigger 
+\begin_inset Formula $\mu$
+\end_inset
+
+-s.
+ The result is shown in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p1-q2-result"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, where 
+\begin_inset Formula $\mu=3.72$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob1/q2-result-0.5.epsc
+	width 45line%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename prob1/q2-result-1.epsc
+	width 45line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0.5$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta=1$
+\end_inset
+
+ case.
+ Note that the errors are centered in the middle, and cases are a little
+ different to different 
+\begin_inset Formula $\theta$
+\end_inset
+
+-s.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p1-q2-result"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To compare the convergence order, we select different 
+\begin_inset Formula $\theta$
+\end_inset
+
+-s and 
+\begin_inset Formula $\tau$
+\end_inset
+
+-s to see if there is any difference.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob1/q2-convergence.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Convergence order for different settings of 
+\begin_inset Formula $\theta$
+\end_inset
+
+-s and 
+\begin_inset Formula $\tau$
+\end_inset
+
+-s.
+ Diagonal sign indicates the critical 
+\begin_inset Formula $\tau$
+\end_inset
+
+ to satisfy the maxium value principle.
+ Dashed lines fit for the converging part of the curve.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p1-q2-convergence"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As is shown in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p1-q2-convergence"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, when 
+\begin_inset Formula $\tau$
+\end_inset
+
+ is much bigger than 
+\begin_inset Formula $h$
+\end_inset
+
+ and even 
+\begin_inset Formula $h^{2}$
+\end_inset
+
+, the error will converge very quickly.
+ To measure the order of this part, we use a straight line to fit that and
+ solve for the slope.
+ For 
+\begin_inset Formula $\theta=0.5,0.75,1$
+\end_inset
+
+, the numerical slope is 
+\begin_inset Formula $0.99,0.99,1.00$
+\end_inset
+
+, respectively.
+ The figure also indicates that to archieve larger precision 
+\begin_inset Formula $\theta=1$
+\end_inset
+
+ will be better, or in another perspective it takes less computation effort
+ to reach the same precision.
+\end_layout
+
+\begin_layout Section*
+Question 3
+\end_layout
+
+\begin_layout Standard
+To further compare ways to handle to the boundary conditions, first, we
+ write down the two schemes:
+\begin_inset Formula 
+\[
+\begin{cases}
+\frac{U_{1}^{m}-U_{0}^{m}}{\Delta x}=\alpha^{m}U_{0}^{m}+g_{0}^{m} & \text{0-order scheme}\\
+\frac{U_{1}^{m}-U_{0}^{m}}{\Delta x}=\alpha^{m}\frac{U_{1}^{m}+U_{0}^{m}}{2}+g_{0}^{m} & \text{1-order scheme}
+\end{cases}.
+\]
+
+\end_inset
+
+However, the results from experiment are quite strange because the 1-order
+ scheme does not turn out to be more precise; see Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p1-q2-boundary"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob1/q2-boundary.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob1/q3-boundary.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison between two ways addressing boudary conditions.
+ The first figure is produced under the setting of 
+\begin_inset Formula $T_{max}=1$
+\end_inset
+
+, while the second under that of 
+\begin_inset Formula $\tau=0.1$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p1-q2-boundary"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part*
+Problem 2
+\end_layout
+
+\begin_layout Section
+\begin_inset Formula $C^{\infty}$
+\end_inset
+
+ initial condition case
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ we choose here is quite simple
+\begin_inset Formula 
+\[
+u_{0}=x^{2}\left(1-x\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A typical numerical error looks like Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p2-cinfty-eg"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob2/cinfty-example.epsc
+	width 100line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Showcase of numerical error.
+ Parameter: 
+\begin_inset Formula $h=1/32,\tau=1/80,\theta=0.5-\frac{1}{12\mu}.$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p2-cinfty-eg"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next we will have the different 
+\begin_inset Formula $N_{t},N_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta$
+\end_inset
+
+ compared.
+ In Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p2-cinfty"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we fix 
+\begin_inset Formula $\theta$
+\end_inset
+
+ in each sub-figure to examine to convergence order.
+ It seems that when 
+\begin_inset Formula $\theta\neq0$
+\end_inset
+
+, the error mainly comes from 
+\begin_inset Formula $O\left(\tau\right)$
+\end_inset
+
+ and partially comes from 
+\begin_inset Formula $O\left(h^{2}\right)$
+\end_inset
+
+, while in the 
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ case, the error is about 
+\begin_inset Formula $O\left(h^{2}\right)$
+\end_inset
+
+ since 
+\begin_inset Formula $\tau\sim O\left(h^{2}\right)$
+\end_inset
+
+ are required.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/cinfty-theta-0.epsc
+	width 50line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ case.
+ Note that the timestep 
+\begin_inset Formula $\tau$
+\end_inset
+
+ is much smaller.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/cinfty-theta-0.5.epsc
+	width 50line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0.5$
+\end_inset
+
+ case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/cinfty-theta-1.epsc
+	width 50line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=1$
+\end_inset
+
+ case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/cinfty-theta-best-match.epsc
+	width 50line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0.5-\frac{1}{12\mu}$
+\end_inset
+
+ case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison between different choices of 
+\begin_inset Formula $\theta$
+\end_inset
+
+-s.
+ Here 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ is 
+\begin_inset Formula $C^{\infty}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p2-cinfty"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset Formula $C^{0}$
+\end_inset
+
+ but not 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ initial condition case
+\end_layout
+
+\begin_layout Standard
+We choose 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ to be
+\begin_inset Formula 
+\[
+u_{0}=\left|x-\frac{1}{2}\right|-\frac{1}{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A typical numerical error is shown in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p2-c0-error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob2/c0-error.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Showcase of numerical error.
+ Parameter: 
+\begin_inset Formula $h=1/128,\tau=1/640,\theta=0.5-\frac{1}{12\mu}.$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p2-c0-error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similar to the previous subsection, we tested on different 
+\begin_inset Formula $N_{t},N_{x},\theta$
+\end_inset
+
+.
+ In Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p2-c0"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we can read the converge order from different side views.
+\end_layout
+
+\begin_layout Itemize
+For 
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ case, very small 
+\begin_inset Formula $\tau$
+\end_inset
+
+-s are needed to satisfy the stability condition, and the convergence is
+ roughly 
+\begin_inset Formula $O\left(h^{2}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+For 
+\begin_inset Formula $\theta\neq0$
+\end_inset
+
+ cases, all the three exhibit an 
+\begin_inset Formula $O\left(\tau^{\frac{1}{2}}+h\right)$
+\end_inset
+
+ order of convergence.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/c0-theta-0.epsc
+	width 50line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ case.
+ Note that the timestep 
+\begin_inset Formula $\tau$
+\end_inset
+
+ is much smaller.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/c0-theta-0.5.epsc
+	width 50line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0.5$
+\end_inset
+
+ case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/c0-theta-1.epsc
+	width 50line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=1$
+\end_inset
+
+ case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/c0-theta-best-match.epsc
+	width 50line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0.5-\frac{1}{12\mu}$
+\end_inset
+
+ case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison between different choices of 
+\begin_inset Formula $\theta$
+\end_inset
+
+-s.
+ Here 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ is 
+\begin_inset Formula $C^{0}$
+\end_inset
+
+ but not 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p2-c0"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Piecewise 
+\begin_inset Formula $C^{0}$
+\end_inset
+
+ with discontinuity initial condition case
+\end_layout
+
+\begin_layout Standard
+We choose 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ to be
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u_{0}=\text{sgn}\left(x-\frac{1}{2}\right)\cdot\sin\left(\pi x\right),
+\]
+
+\end_inset
+
+so the analytic solution is 
+\begin_inset Formula 
+\[
+u\left(x,t\right)=\sum_{k=1}^{+\infty}\frac{8k\cdot\left(-1\right)^{k}}{\left(4k^{2}-1\right)\pi}\sin\left(2\pi kx\right)\exp\left(-4k^{2}\pi^{2}t\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Before we analyze the results, an interesting thing worth mentioning is
+ that although 
+\begin_inset Formula $\left|\left|e_{\theta}\right|\right|_{L_{\infty}}$
+\end_inset
+
+ is often quite large, 
+\begin_inset Formula $\left|\left|e_{\theta}\right|\right|_{L_{2}}$
+\end_inset
+
+ is not and converges quickly.
+ As is shown in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p2-nc-error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, different selction of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ will cause different kinds of numerical difficulties, but one common one
+ is that 
+\begin_inset Formula $\theta$
+\end_inset
+
+ schemes will try to `overbend' the initial condition across the x-axis,
+ so that 
+\begin_inset Formula $\left|e_{\theta}\left(x,t\right)\right|$
+\end_inset
+
+ will be very large for 
+\begin_inset Formula $t$
+\end_inset
+
+ very close to 0; as the time increases, the error is quickly wiped out
+ and the solution will be more stable.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/nc-theta-best-match-error.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error of 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $h=1/64,\tau=1/80,\theta=\frac{1}{2}-\frac{1}{12\mu}$
+\end_inset
+
+.
+ Note that the errors are gathered along the discontinuity.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/nc-theta-1-error.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error of 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $h=1/64,\tau=1/1280,\theta=1$
+\end_inset
+
+.
+ Note that the errors are gathered along the discontinuity only for very
+ small 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Different types of typical numerical error distribution.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p2-nc-error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similar to the previous two subsections, we tested on different 
+\begin_inset Formula $N_{t},N_{x},\theta$
+\end_inset
+
+.
+ In Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p2-nc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we can read the converge order from different side views.
+\end_layout
+
+\begin_layout Itemize
+For 
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ case, very small 
+\begin_inset Formula $\tau$
+\end_inset
+
+-s are needed to satisfy the stability condition, and the convergence is
+ also roughly 
+\begin_inset Formula $O\left(h^{2}\right)$
+\end_inset
+
+ for both 
+\begin_inset Formula $\left|\left|e_{\theta}\right|\right|_{L_{\infty}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\left|\left|e_{\theta}\right|\right|_{L_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+For 
+\begin_inset Formula $\theta\neq0$
+\end_inset
+
+ cases, there are no signs of convergence for 
+\begin_inset Formula $\left|\left|e_{\theta}\right|\right|_{L_{\infty}}$
+\end_inset
+
+, and 
+\begin_inset Formula $\left|\left|e_{\theta}\right|\right|_{L_{2}}$
+\end_inset
+
+ seems to converge at the order of 
+\begin_inset Formula $O\left(\tau+h\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/nc-theta-0.epsc
+	width 65line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ case.
+ Note that the timestep 
+\begin_inset Formula $\tau$
+\end_inset
+
+ is much smaller.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/nc-theta-0.5.epsc
+	width 65line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0.5$
+\end_inset
+
+ case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/nc-theta-1.epsc
+	width 65line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=1$
+\end_inset
+
+ case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename prob2/nc-theta-best-match.epsc
+	width 65line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\theta=0.5-\frac{1}{12\mu}$
+\end_inset
+
+ case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison between different choices of 
+\begin_inset Formula $\theta$
+\end_inset
+
+-s.
+ Here 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ is piecewise 
+\begin_inset Formula $C^{0}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p2-nc"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part*
+Problem 3
+\end_layout
+
+\begin_layout Standard
+It can be easily obtained that the analytic solution to the system 
+\begin_inset Formula 
+\[
+\begin{cases}
+u_{t}=u_{xx}+u_{yy} & \left(x,y\right)\in\Omega=\left(0,1\right)^{2},\thinspace t>0\\
+\dfrac{\partial u}{\partial\nu}\left(x,y,t\right)=0 & \left(x,y\right)\in\partial\Omega,\thinspace t>0\\
+u\left(x,y,0\right)=\cos\left(\pi x\right)\cos\left(2\pi y\right) & \left(x,y\right)\in\Omega
+\end{cases}
+\]
+
+\end_inset
+
+has an exponential decay in the time dimension, or more precisely
+\begin_inset Formula 
+\[
+u\left(x,y,t\right)=\cos\left(\pi x\right)\cos\left(2\pi y\right)\exp\left(-5\pi^{2}t\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Explicit Scheme (
+\begin_inset Formula $\theta=0$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+As usual, explicit schemes require a much smaller 
+\begin_inset Formula $\tau$
+\end_inset
+
+, so the comparison between different 
+\begin_inset Formula $h$
+\end_inset
+
+ will be a little harder, which is shown in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p3-explicit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ It seems that further decreasing 
+\begin_inset Formula $\tau$
+\end_inset
+
+ will not have a great effect on the precision, while the order for 
+\begin_inset Formula $h$
+\end_inset
+
+ is a second one.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob3/explicit-loglog.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Explicit scheme.
+ Convergence order for 
+\begin_inset Formula $\tau$
+\end_inset
+
+ and 
+\begin_inset Formula $h$
+\end_inset
+
+, most likely to be 
+\begin_inset Formula $O\left(h^{2}\right)$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p3-explicit"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Implicit Scheme (
+\begin_inset Formula $\theta=1$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+Here we choose five scales for the spacial discretization: 
+\begin_inset Formula $N_{x}=8,16,32,64,128$
+\end_inset
+
+.
+ The timesteps for different 
+\begin_inset Formula $h$
+\end_inset
+
+-s are very close, so we can compare them directly, as is shown in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p3-implicit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ For sufficient small 
+\begin_inset Formula $h$
+\end_inset
+
+-s, there is a second-order convergence for 
+\begin_inset Formula $\tau$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob3/implicit-loglog.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Implicit Scheme.
+ Convergence order for 
+\begin_inset Formula $\tau$
+\end_inset
+
+ and 
+\begin_inset Formula $h$
+\end_inset
+
+, most likely to be 
+\begin_inset Formula $O\left(\tau+h^{2}\right)$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p3-implicit"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+ADI Scheme Based on Crank-Nicolson (
+\begin_inset Formula $\theta=0.5$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+As is listed in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p3-adi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, this scheme will also give a 
+\begin_inset Formula $O\left(\tau+h^{2}\right)$
+\end_inset
+
+ convergence order.
+ A typical numerical error distribution is shown in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p3-adi-error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob3/adi-loglog.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+ADI scheme based on Crank-Nicolson.
+ Convergence order for 
+\begin_inset Formula $\tau$
+\end_inset
+
+ and 
+\begin_inset Formula $h$
+\end_inset
+
+, most likely to be 
+\begin_inset Formula $O\left(\tau+h^{2}\right)$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p3-adi"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename prob3/adi-error.epsc
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Showcase of numerical error in the result produced by ADI scheme based on
+ Crank-Nicolson.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p3-adi-error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
